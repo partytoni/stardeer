@@ -7,7 +7,8 @@ end
 
 gem 'geokit'
 gem 'google_places'
-
+gem 'omniauth-facebook'
+gem 'devise'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.2'
