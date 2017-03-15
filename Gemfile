@@ -7,8 +7,11 @@ end
 
 gem 'geokit'
 gem 'google_places'
-gem 'omniauth-facebook'
 gem 'devise'
+gem 'yelp', require: 'yelp'
+gem 'instagram',  :git => 'git://github.com/Instagram/instagram-ruby-gem.git'
+gem 'oauth'
+
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.2'
