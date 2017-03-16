@@ -5,6 +5,8 @@ require 'uri'
 class StaticPagesController < ApplicationController
   helper_method :get_spots
   helper_method :yelp_spots
+  helper_method :foursquare_spots
+  helper_method :foursquare_spot
   helper_method :yelp_review
   helper_method :get_reviews
   helper_method :get_photos
@@ -25,6 +27,8 @@ class StaticPagesController < ApplicationController
   def yelpdetails
   end
 
+  def foursquaredetails
+  end
 
 
 private
@@ -93,5 +97,27 @@ private
     end
     list << business.url
     list << business.image_url
+  end
+
+  def foursquare_spots()
+    client = Foursquare2::Client.new(:client_id => 'YOY24IGK0SILRQEZ4KBQNAFD3GNAHA0Z5SFDBX34M1AS4LYP',
+     :client_secret => 'MQNG4KGWGT0T4DYIYVAFRSJ5JW4U0TDONBDM02MARDWQA3UX',
+     :api_version => '20120609')
+    spots=client.search_venues(:ll => session[:lat]+","+session[:lng])
+    #print("\n\nROBE\n\n"+spots.to_s)
+
+  end
+
+  def foursquare_spot(id)
+    client = Foursquare2::Client.new(:client_id => 'YOY24IGK0SILRQEZ4KBQNAFD3GNAHA0Z5SFDBX34M1AS4LYP',
+     :client_secret => 'MQNG4KGWGT0T4DYIYVAFRSJ5JW4U0TDONBDM02MARDWQA3UX',
+     :api_version => '20120609')
+    s = client.venue(id)
+    res = Hash.new
+    res["name"] = s.name
+    res["rating"] = (s.rating) + "su 10"
+    res["phrases"] = s.phrases
+    print(s.photos.to_s)
+    res
   end
 end

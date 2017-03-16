@@ -1,6 +1,10 @@
 <%address=params[:search]%>
 <%@spots=get_spots(address)%>
 <%@yelp_spots=yelp_spots()%>
+<table>
+<tr>
+
+<td>
 
 <table>
   Google Results
@@ -23,7 +27,8 @@
     <% end %>
   </tbody>
 </table>
-<br><br><br><br>
+</td>
+<td>
 <table>
   Yelp Results
   <thead>
@@ -43,6 +48,30 @@
     <% end %>
   </tbody>
 </table>
+</td>
+<td>
+<table>
+  foursquare Results
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
 
+  <tbody>
+    <% spot_hash=foursquare_spots().first %>
+    <% spot_hash.second.each do |spot| %>
+    <tr>
+      <td> <%= spot.name%></td>
+      <td><%= link_to 'Details', "/foursquaredetails?id="+spot.id %></td>
+    </tr>
+    <%end%>
+  </tbody>
+</table>
+</td>
+
+</tr>
+</table>
 
 <br>
