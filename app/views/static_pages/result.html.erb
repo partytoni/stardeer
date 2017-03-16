@@ -1,7 +1,9 @@
 <%address=params[:search]%>
 <%@spots=get_spots(address)%>
+<%@yelp_spots=yelp_spots()%>
 
 <table>
+  Google Results
   <thead>
     <tr>
       <th>Name</th>
@@ -15,8 +17,28 @@
       <tr>
         <td><%= spot.name %></td>
         <td><%= spot.rating %></td>
-        <td><%= link_to 'Details', "/details?place_id="+spot.place_id %></td>
+        <td><%= link_to 'Details', "/googledetails?place_id="+spot.place_id %></td>
         <!-- passa alla pagina details direttamente il place_id dello spot -->
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<br><br><br><br>
+<table>
+  Yelp Results
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @yelp_spots.each do |spot| %>
+      <tr>
+        <td><%= spot.name %></td>
+        <td><%= spot.rating %></td>
+        <td><%= link_to 'Details', "/yelpdetails?id="+spot.id %></td>
       </tr>
     <% end %>
   </tbody>

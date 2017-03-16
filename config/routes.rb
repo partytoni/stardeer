@@ -8,7 +8,8 @@ Rails.application.routes.draw do
   resources :places
   get '/instagram' => "static_pages#instagram"
   get '/result' => "static_pages#result"
-  get "/details" => "static_pages#details"
+  get "/googledetails" => "static_pages#googledetails"
+  get "/yelpdetails" => "static_pages#yelpdetails"
   root "static_pages#home"
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

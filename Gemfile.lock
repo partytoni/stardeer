@@ -74,6 +74,10 @@ GEM
     faraday_middleware (0.9.2)
       faraday (>= 0.7.4, < 0.10)
     ffi (1.9.18)
+    foursquare2 (2.0.2)
+      faraday (~> 0.8)
+      faraday_middleware (>= 0.8)
+      hashie (>= 1.0, < 4.0.0)
     geokit (1.10.0)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
@@ -197,6 +201,7 @@ DEPENDENCIES
   byebug
   coffee-rails (~> 4.2)
   devise
+  foursquare2
   geokit
   google_places
   instagram!

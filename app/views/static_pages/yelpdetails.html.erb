@@ -1,0 +1,41 @@
+<%id=params[:id] %>
+<%@review=yelp_review(id)%>
+<%name=@review[0]%>
+<%excerpt=@review[1]%>
+<%rating=@review[2]%>
+<%username=@review[3]%>
+<%url=@review[4]%>
+<%image_url=@review[5]%>
+
+<%if excerpt!=""%>
+  <table>
+    <thead>
+      <tr>
+        <%= image_tag(image_url) %>
+        <th colspan="3"><%= name %></th>
+      </tr>
+
+      <tr>
+        <th>Rating num</th>
+        <th>Name of the Author</th>
+        <th>Review</th>
+        <th colspan="3"></th>
+      </tr>
+
+    </thead>
+
+    <tbody>
+      <tr>
+        <td><%= rating %></td>
+        <td><%= username%></td>
+        <td><%= excerpt %></td>
+      </tr>
+    </tbody>
+  </table>
+<%else%>
+  <br><br>
+  Nessuna review per questo business
+<%end%>
+
+Per maggiori informazioni
+<%=link_to "clicca qui!",   url, target: :_blank1%>

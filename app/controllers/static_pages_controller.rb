@@ -1,8 +1,11 @@
 require 'instagram'
 require 'net/http'
 require 'uri'
+
 class StaticPagesController < ApplicationController
   helper_method :get_spots
+  helper_method :yelp_spots
+  helper_method :yelp_review
   helper_method :get_reviews
   helper_method :get_photos
   helper_method :get_image
@@ -16,7 +19,10 @@ class StaticPagesController < ApplicationController
   def result
   end
 
-  def details
+  def googledetails
+  end
+
+  def yelpdetails
   end
 
 
@@ -62,7 +68,30 @@ private
     return @client.spot(place_id)
   end
 
-  def instagram_photos
-    #TODO
+  def yelp_spots()
+    @client=Yelp.client
+    params = {}
+    locale = { lang: 'it' }
+    coordinates = { latitude: session[:lat], longitude: session[:lng] }
+    return @client.search_by_coordinates(coordinates, params, locale).businesses
+  end
+
+  def yelp_review(id)
+    @client=Yelp.client
+    locale = { lang: 'it' }
+    list=[]
+    business= (@client.business(id, locale)).business
+    list << business.name
+    if business.reviews!=nil
+      list << business.reviews[0].excerpt
+      list << business.reviews[0].rating
+      list << business.reviews[0].user["name"]
+    else
+      list << ""
+      list << ""
+      list << ""
+    end
+    list << business.url
+    list << business.image_url
   end
 end
