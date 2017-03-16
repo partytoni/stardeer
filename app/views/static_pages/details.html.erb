@@ -1,5 +1,6 @@
 <% place_id=params[:place_id] %>
 <% place = get_place_by_id(place_id) %>
+<% photos=get_photos(place_id)%>
 
 
 <table>
@@ -28,3 +29,9 @@
     </tr>
   </tbody>
 </table>
+
+<% photos.each do |p| %>
+<%link="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference="+p.photo_reference+"&key="+API_KEY %>
+<%= image_tag(get_image(link))%>
+<br><br><br><br><br><br><br>
+<%end%>

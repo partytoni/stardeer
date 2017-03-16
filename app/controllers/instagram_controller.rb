@@ -1,12 +1,10 @@
 class InstagramController < ApplicationController
   def login
-    redirect_to Instagram.authorize_url(:redirect_uri => CALLBACK_URL)
+    redirect_to "https://api.instagram.com/oauth/authorize/?client_id=951dbff4334f41158ed07f169c7ffc48&redirect_uri=http://localhost:3000/instagram/callback&response_type=token"
   end
 
 
   def callback
-    response = Instagram.get_access_token(params[:code], :redirect_uri => CALLBACK_URL)
-    session[:access_token] = response.access_token
     redirect_to "/"
   end
 
