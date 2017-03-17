@@ -1,10 +1,12 @@
 <% id=params[:id] %>
 <% spot = foursquare_spot(id) %>
+<% address = foursquare_spot_address(id) %>
 
 <table style="margin:auto;">
   <thead>
     <tr>
       <th colspan="3"><%= spot["name"]%></th>
+      <th colspan="3"><%= address["address"]+", "+address["city"]+", "+address["cc"]+","+address["lat"].to_s+","+address["lng"].to_s%></th>
     </tr>
 
     <tr>
@@ -19,9 +21,21 @@
   <tbody>
     <tr>
       <td><%= spot["rating"] %></td>
-      <td><%= spot["phrases"] %></td>
+      <td>
+        <% if spot!=nil and spot["phrases"]!= nil%>
+          <% spot["phrases"].each do |fr| %>
+            <%= fr[:sample][:text].to_s %><br>
+          <%end%>
+        <%else%>
+            <%="Nessuna recensione"%>
+        <%end%>
+      </td>
       <!-- passa alla pagina details direttamente il place_place_id dello spot -->
 
     </tr>
   </tbody>
 </table>
+
+<%spot["photos"].each do |s| %>
+  <%=image_tag(s)%>
+<%end%>

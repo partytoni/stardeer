@@ -1,0 +1,5 @@
+<% @posts= Post.all %>
+<% @posts.each do |p| %>
+  <%= p.text if p.user_id==current_user.id %>
+  <br>
+<%end %>

@@ -1,12 +1,18 @@
 <% place_id=params[:place_id] %>
 <% place = get_place_by_id(place_id) %>
 <% photos=get_photos(place_id)%>
+<% hash_address=get_spot_address(place_id)%>
+<% location=get_spot_location(place_id)%>
 
 
 <table>
   <thead>
     <tr>
-      <th colspan="3"><%= place.name %></th>
+      <th colspan="3"><%= link_to place.name, place.url, target: :_blank %></th>
+    </tr>
+    <tr>
+      <%v=hash_address["route"].to_s+" "+hash_address["street_number"].to_s+", "+hash_address["locality"].to_s+", "+location[0].to_s+","+location[1].to_s%>
+      <%= link_to v, "/result?utf8=✓&search="+v+"&commit=Search"%>
     </tr>
 
     <tr>
@@ -31,7 +37,6 @@
 </table>
 
 <% photos.each do |p| %>
-<%link="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference="+p.photo_reference+"&key="+API_KEY %>
-<%= image_tag(get_image(link))%>
-<br><br><br><br><br><br><br>
+  <%link="https://maps.googleapis.com/maps/api/place/photo?maxwidth=300&maxheigth=500&photoreference="+p.photo_reference+"&key="+API_KEY %>
+  <%=image_tag(get_image(link))%>
 <%end%>

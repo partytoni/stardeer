@@ -6,6 +6,9 @@ class StaticPagesController < ApplicationController
   helper_method :get_spots
   helper_method :yelp_spots
   helper_method :foursquare_spots
+  helper_method :foursquare_spot_address
+  helper_method :get_spot_address
+  helper_method :get_spot_location
   helper_method :foursquare_spot
   helper_method :yelp_review
   helper_method :get_reviews
@@ -43,6 +46,26 @@ private
     return @spots
   end
 
+  def get_spot_address(place_id)
+    # hash_address ha types, long_name, short_name e i types sono "route, street_number, locality, country, postal_code"
+    @client = GooglePlaces::Client.new("AIzaSyDseOM0g-hw8x_uG1EYJOFQ4uMMR8U57KA")
+    hash_address=Hash.new
+    addresses = @client.spot(place_id).address_components
+    addresses.each do |a|
+      print("\n\n\n"+a["types"][0].to_s+"\n\n\n")
+      hash_address[a["types"][0]]=a["long_name"]
+    end
+    hash_address
+  end
+
+  def get_spot_location(place_id)
+    # hash_address ha types, long_name, short_name e i types sono "route, street_number, locality, country, postal_code"
+    @client = GooglePlaces::Client.new("AIzaSyDseOM0g-hw8x_uG1EYJOFQ4uMMR8U57KA")
+    hash_address=Hash.new
+    addresses = [@client.spot(place_id)[:lat],@client.spot(place_id)[:lng]]
+    addresses
+  end
+
   def get_reviews(place_id)
     @client = GooglePlaces::Client.new("AIzaSyDseOM0g-hw8x_uG1EYJOFQ4uMMR8U57KA")
     reviews = @client.spot(place_id).reviews
@@ -51,7 +74,7 @@ private
 
   def get_photos(place_id)
     @client = GooglePlaces::Client.new("AIzaSyDseOM0g-hw8x_uG1EYJOFQ4uMMR8U57KA")
-    reviews = @client.spot(place_id).photos
+    photos = @client.spot(place_id).photos
   end
 
   def get_image(link)
@@ -65,7 +88,6 @@ private
     final_link=split1.split("\"")[0]
     return final_link
   end
-
 
   def get_place_by_id(place_id)
     @client = GooglePlaces::Client.new("AIzaSyDseOM0g-hw8x_uG1EYJOFQ4uMMR8U57KA")
@@ -115,9 +137,39 @@ private
     s = client.venue(id)
     res = Hash.new
     res["name"] = s.name
-    res["rating"] = (s.rating) + "su 10"
+    if s.rating!=nil
+      res["rating"] = (s.rating).to_s + "su 10"
+    else
+      res["rating"] = "Nessuno"
+    end
     res["phrases"] = s.phrases
-    print(s.photos.to_s)
+    res["photos"] = []
+    s.photos[:groups][0][:items].each do |i|
+        res["photos"] << i[:prefix]+"500x300"+i[:suffix]
+    end
     res
+  end
+
+  def foursquare_spot_address(id)
+    client = Foursquare2::Client.new(:client_id => 'YOY24IGK0SILRQEZ4KBQNAFD3GNAHA0Z5SFDBX34M1AS4LYP',
+     :client_secret => 'MQNG4KGWGT0T4DYIYVAFRSJ5JW4U0TDONBDM02MARDWQA3UX',
+     :api_version => '20120609')
+    s = client.venue(id)
+    s.location
+  end
+
+  def stampa(stringa)
+    num=0
+    stringa.each_char do |s|
+      if s=="<"
+        num=num+1
+        print("\n"+("\t")*num+s)
+      elsif s==">"
+        num=num-1
+        print(s+"\n"+("\t")*num)
+      else
+        print(s)
+      end
+    end
   end
 end

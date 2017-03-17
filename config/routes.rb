@@ -1,11 +1,13 @@
 require_or_load 'instagram'
 
 Rails.application.routes.draw do
+  resources :posts
   get 'instagram/login'
   get 'instagram/callback'
 
   devise_for :users
   resources :places
+  get 'users/:id' => 'users#show'
   get '/instagram' => "static_pages#instagram"
   get '/result' => "static_pages#result"
   get "/googledetails" => "static_pages#googledetails"
