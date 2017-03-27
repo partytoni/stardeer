@@ -29,7 +29,7 @@ module StaticPagesHelper
   def get_google_spot_address(place_id)
     hash=get_spot_address(place_id)
     list=[]
-    list << hash["route"] + " " + hash["street_number"]
+    list << hash["route"].to_s + " " + hash["street_number"].to_s
     list << hash["locality"]
     list << hash["country"]
   end

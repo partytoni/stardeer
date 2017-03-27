@@ -16,8 +16,12 @@ class PostsController < ApplicationController
   # GET /posts/new
   def new
     @post = Post.new
-    session[:site]=params[:site]
-    session[:place_id]=params[:id]
+    if params[:site]!=nil and params[:id]!=nil
+      session[:site]=params[:site]
+      session[:place_id]=params[:id]
+    else
+      redirect_to '/404'
+    end
   end
 
   # GET /posts/1/edit
@@ -84,7 +88,9 @@ class PostsController < ApplicationController
         @place=Place.new
         @place.address=a[0]
         @place.city=a[1]
+        @place.place_id=session[:place_id]
         @place.cc=a[2]
+        @place.name=a[3]
         n=Place.maximum(:id)
         if n==nil
           @place.id=0
@@ -120,15 +126,18 @@ class PostsController < ApplicationController
           hash_address[a["types"][0]]=a["long_name"]
         end
       end
+      hash_address["name"]= @client.spot(place_id).name
       hash_address
+
     end
 
     def get_google_spot_address(place_id)
       hash=get_spot_address(place_id)
       list=[]
-      list << hash["route"] + " " + hash["street_number"]
+      list << hash["route"].to_s + " " + hash["street_number"].to_s
       list << hash["locality"]
       list << hash["country"]
+      list << hash["name"]
     end
 
 

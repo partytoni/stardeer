@@ -1,4 +1,6 @@
 <p id="notice"><%= notice %></p>
+<% place_id= @post.place_id %>
+<% @place = Place.find(place_id)%>
 
 <p>
   <strong>User:</strong>
@@ -8,6 +10,16 @@
 <p>
   <strong>Text:</strong>
   <%= @post.text %>
+</p>
+
+<p>
+  <strong>Place Address:</strong>
+  <%= @place.address %>
+</p>
+
+<p>
+  <strong>Place Name:</strong>
+  <%= @place.name %>
 </p>
 
 <%= link_to 'Edit', edit_post_path(@post) if sei_proprio_tu?(@post)%> |

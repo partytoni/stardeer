@@ -57,29 +57,7 @@ module PostsHelper
     return @spots
   end
 
-  def get_spot_address(place_id) #google places
-    # hash_address ha types, long_name, short_name e i types sono "route, street_number, locality, country, postal_code"
-    @client = GooglePlaces::Client.new("AIzaSyDseOM0g-hw8x_uG1EYJOFQ4uMMR8U57KA")
-    hash_address=Hash.new
-    addresses = @client.spot(place_id).address_components
-    addresses.each do |a|
-      print("\n\n\n"+a["types"][0].to_s+"\n\n\n")
-      if a["types"][0]=="country" #per country c'è bisogno del cc
-        hash_address[a["types"][0]]=a["short_name"]
-      else
-        hash_address[a["types"][0]]=a["long_name"]
-      end
-    end
-    hash_address
-  end
 
-  def get_google_spot_address(place_id)
-    hash=get_spot_address(place_id)
-    list=[]
-    list << hash["route"] + " " + hash["street_number"]
-    list << hash["locality"]
-    list << hash["country"]
-  end
 
   def get_spot_location(place_id) #google location
     # hash_address ha types, long_name, short_name e i types sono "route, street_number, locality, country, postal_code"
