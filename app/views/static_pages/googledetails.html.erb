@@ -1,8 +1,10 @@
 <% place_id=params[:place_id] %>
 <% place = get_place_by_id(place_id) %>
 <% photos=get_photos(place_id)%>
-<% hash_address=get_spot_address(place_id)%>
+<% hash_address=get_google_spot_address(place_id)%>
 <% location=get_spot_location(place_id)%>
+
+<br><br> <%= link_to 'Rate', new_post_path+"?site=google&id="+place_id%>
 
 
 <table>
@@ -11,8 +13,7 @@
       <th colspan="3"><%= link_to place.name, place.url, target: :_blank %></th>
     </tr>
     <tr>
-      <%v=hash_address["route"].to_s+" "+hash_address["street_number"].to_s+", "+hash_address["locality"].to_s+", "+location[0].to_s+","+location[1].to_s%>
-      <%= link_to v, "/result?utf8=✓&search="+v+"&commit=Search"%>
+      <%=hash_address%>
     </tr>
 
     <tr>

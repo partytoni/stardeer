@@ -10,3 +10,8 @@ User.create!(
              password:              "password",
              password_confirmation: "password",
              role: "a")
+User.create!(
+             email: "ant.mar94@gmail.com",
+             password:              "123456",
+             password_confirmation: "123456",
+             role: "a")

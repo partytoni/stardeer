@@ -8,6 +8,10 @@
 <%image_url=@review[5]%>
 
 <%if excerpt!=""%>
+
+  <br><br> <%= link_to 'Rate', new_post_path+"?site=yelp&id="+id%>
+
+
   <table>
     <thead>
       <tr>
@@ -36,3 +40,5 @@
   <br><br>
   Nessuna review per questo business
 <%end%>
+
+<%= yelp_spot_address(id) %>

@@ -2,11 +2,15 @@
 <% spot = foursquare_spot(id) %>
 <% address = foursquare_spot_address(id) %>
 
+<br><br> <%= link_to 'Rate', new_post_path+"?site=foursquare&id="+id%>
+
 <table style="margin:auto;">
   <thead>
     <tr>
       <th colspan="3"><%= spot["name"]%></th>
-      <th colspan="3"><%= address["address"]+", "+address["city"]+", "+address["cc"]+","+address["lat"].to_s+","+address["lng"].to_s%></th>
+      <%if address["address"]!=nil%>
+        <th colspan="3"><%= address["address"]+", "+address["city"]+", "+address["cc"]%></th>
+      <%end%>
     </tr>
 
     <tr>
