@@ -17,8 +17,10 @@
         <td><%= link_to User.find(post.user_id).email, "/users/"+post.user_id.to_s %></td>
         <td><%= post.text %></td>
         <td><%= link_to 'Show', post %></td>
-        <td><%= link_to 'Edit', edit_post_path(post) %></td>
-        <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% if sei_proprio_tu?(post) %>
+          <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' }%></td>
+          <td><%= link_to 'Edit', edit_post_path(post)%></td>
+        <%end%>
       </tr>
     <% end %>
   </tbody>

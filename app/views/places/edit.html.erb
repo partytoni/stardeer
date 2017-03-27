@@ -1,6 +1,12 @@
-<h1>Editing Place</h1>
+<% if admin?(current_user) %>
 
-<%= render 'form', place: @place %>
+  <h1>Editing Place</h1>
 
-<%= link_to 'Show', @place %> |
-<%= link_to 'Back', places_path %>
+  <%= render 'form', place: @place %>
+
+  <%= link_to 'Show', @place %> |
+  <%= link_to 'Back', places_path %>
+<%else%>
+  <br><br>
+  Non puoi accedere a questa pagina. Sei un poraccio, il sito scrivitelo da solo.
+<%end%>

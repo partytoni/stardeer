@@ -1,6 +1,8 @@
 <h1>Editing Post</h1>
-
-<%= render 'form', post: @post %>
-
-<%= link_to 'Show', @post %> |
+<% if sei_proprio_tu?(@post) %>
+  <%= render 'form', post: @post %>
+  <%= link_to 'Show', @post %> |
+<% else %>
+  Non puoi modificare questo post in quanto non è tuo, porcodio!
+<% end %>
 <%= link_to 'Back', posts_path %>

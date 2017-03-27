@@ -17,13 +17,13 @@
         <td><%= place.name %></td>
         <td><%= place.address %></td>
         <td><%= link_to 'Show', place %></td>
-        <td><%= link_to 'Edit', edit_place_path(place) %></td>
-        <td><%= link_to 'Destroy', place, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% if admin?(current_user) %>
+          <td><%= link_to 'Edit', edit_place_path(place) %></td>
+          <td><%= link_to 'Destroy', place, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <%end%>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<br>
-
-<%= link_to 'New Place', new_place_path %>
+<%= link_to 'New Place', new_place_path if admin?(current_user)%>
