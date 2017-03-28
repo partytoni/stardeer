@@ -1,4 +1,1 @@
-<%= form_tag("/result?search="+params[:search].to_s, :method => "get", id: "search-form") do %>
-<%= text_field_tag :search, params[:search], placeholder: "Search Posts", value:"via luigi pulci roma"  %>
-<%= submit_tag "Search" %>
-<% end %>
+<%= render 'autocomplete'%>

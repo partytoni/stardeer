@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+    <html>
+      <head>
+        <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
+        <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places&key=AIzaSyDseOM0g-hw8x_uG1EYJOFQ4uMMR8U57KA"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+      </head>
+        <script>
+            var autocomplete;
+            function send_search(place){
+            $.get( "http://localhost:3000/result", { search : place.formatted_address} ,function(){
+              window.location.href = "http://localhost:3000/result"+"?search="+place.formatted_address;
+            });
+
+            }
+            function initialize() {
+               var input = document.getElementById('autocomplete');
+              var searchBox = new google.maps.places.SearchBox(input);
+              autocomplete = new google.maps.places.Autocomplete(
+                  /** @type {HTMLInputElement} */(input),
+                  { types: ['geocode'] });
+              google.maps.event.addListener(autocomplete, 'place_changed', function() {
+                  var place = autocomplete.getPlace();
+                  var address = place.formatted_address;
+                  send_search(place);
+              });
+            }
+        </script>
+      </head>
+      <body onload="initialize()">
+        <div id="locationField">
+          <input id="autocomplete"  type="text" placeholder="Cerca">
+        </div>
+        <p id = "container"></p>
+      </body>
+    </html>
