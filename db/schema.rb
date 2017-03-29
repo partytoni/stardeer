@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170329093658) do
+ActiveRecord::Schema.define(version: 20170329153830) do
 
   create_table "places", force: :cascade do |t|
     t.string   "name"
@@ -47,6 +47,7 @@ ActiveRecord::Schema.define(version: 20170329093658) do
     t.boolean  "superadmin_role",        default: false
     t.boolean  "supervisor_role",        default: false
     t.boolean  "user_role",              default: true
+    t.boolean  "banned",                 default: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

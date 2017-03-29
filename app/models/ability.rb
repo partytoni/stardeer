@@ -13,7 +13,6 @@ class Ability
     if user.supervisor_role?
       can :manage, Post
       can :manage, User
-      can :manage, Place
       can :access, :rails_admin
       can :dashboard
     end
