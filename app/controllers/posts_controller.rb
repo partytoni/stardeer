@@ -6,12 +6,13 @@ class PostsController < ApplicationController
   # GET /posts
   # GET /posts.json
   def index
-    @posts = Post.all
+    redirect_to '/404'
   end
 
   # GET /posts/1
   # GET /posts/1.json
   def show
+    redirect_to '/404'
   end
 
   # GET /posts/new
@@ -27,6 +28,14 @@ class PostsController < ApplicationController
 
   # GET /posts/1/edit
   def edit
+    post=Post.find(params[:id])
+    if post==nil
+      redirect_to '/404'
+    elsif post.user_id!=current_user.id
+      redirect_to '/404'
+    else
+      return
+    end
   end
 
   # POST /posts
@@ -92,6 +101,7 @@ class PostsController < ApplicationController
       @place.place_id=session[:place_id]
       @place.cc=a[2]
       @place.name=a[3]
+      @place.site=session[:site]
       n=Place.maximum(:id)
       if n==nil
         @place.id=0
@@ -151,5 +161,4 @@ class PostsController < ApplicationController
     end
     nil
   end
-
 end

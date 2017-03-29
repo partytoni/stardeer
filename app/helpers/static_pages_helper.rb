@@ -168,4 +168,24 @@ module StaticPagesHelper
       end
     end
   end
+
+  def get_our_reviews(site, place_id)
+    @place = Place.find_by place_id:place_id, site:site
+    if @place
+      @posts = []
+      p=Post.find_by place_id:@place.id
+      if p.class==Post
+        @posts << p
+      else
+        @posts=p
+      end
+      @posts  
+    else
+      []
+    end
+  end
+
+  def get_user_email(id)
+    User.find(id).email
+  end
 end

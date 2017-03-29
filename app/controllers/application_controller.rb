@@ -8,16 +8,18 @@ class ApplicationController < ActionController::Base
       format.all  { render nothing: true, status: 404 }
     end
   end
+
   def path_error
     redirect_to '/404'
   end
+
   rescue_from Exception do |e|
     print("\n\nun errore, aiuto"+ e.to_s)
     path_error
   end
+  
   rescue_from ActionController::RoutingError do |e|
     print("\n\nun errore, aiuto1"+ e.to_s)
     path_error
   end
-
 end

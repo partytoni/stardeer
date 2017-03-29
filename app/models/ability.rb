@@ -8,8 +8,8 @@ class Ability
     if user.superadmin_role?
        can :manage, :all
        can :access, :rails_admin       # only allow admin users to access Rails Admin
-       can :dashboard                  # allow access to dashboard
-    end
+       can :dashboard
+    end                 # allow access to dashboard
     if user.supervisor_role?
       can :manage, Post
       can :manage, User
@@ -17,6 +17,11 @@ class Ability
       can :access, :rails_admin
       can :dashboard
     end
+    if !user.supervisor_role and !user.superadmin_role
+      alias_action :create, :read, :update, :destroy, :to => :crud
+      can :crud, Post
+    end
+
     #
     # The first argument to `can` is the action you are giving the user
     # permission to do.

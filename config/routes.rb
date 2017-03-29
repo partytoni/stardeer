@@ -9,6 +9,6 @@ Rails.application.routes.draw do
   get "/yelpdetails" => "static_pages#yelpdetails"
   get "/foursquaredetails" => "static_pages#foursquaredetails"
   get '404', :to => 'application#page_not_found'
-  get "*all" =>  "application#path_error"
+  #get "*all" =>  "application#path_error"
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
