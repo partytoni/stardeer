@@ -1,4 +1,3 @@
-require 'instagram'
 require 'net/http'
 require 'uri'
 

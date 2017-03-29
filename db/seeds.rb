@@ -9,9 +9,9 @@ User.create!(
              email: "martemmuccio@gmail.com",
              password:              "password",
              password_confirmation: "password",
-             role: "a")
+             superadmin_role: true)
 User.create!(
              email: "ant.mar94@gmail.com",
              password:              "123456",
              password_confirmation: "123456",
-             role: "a")
+             supervisor_role: true)

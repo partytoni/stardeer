@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
+  load_and_authorize_resource
   helper_method :create_review
 
   # GET /posts
@@ -62,93 +63,93 @@ class PostsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_post
-      @post = Post.find(params[:id])
+  # Use callbacks to share common setup or constraints between actions.
+  def set_post
+    @post = Post.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def post_params
+    params.require(:post).permit(:text)
+  end
+
+
+  def create_review(post)
+    if session[:site]=="foursquare"
+      a=get_foursquare_spot_address(session[:place_id])
+      @place=place_obj(a)
+    elsif session[:site] == "google"
+      a = get_google_spot_address(session[:place_id])
+      @place=place_obj(a)
+    elsif session[:site] == "yelp"
+      a=yelp_spot_address(session[:place_id])
+      @place=place_obj(a)
     end
-
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def post_params
-      params.require(:post).permit(:text)
-    end
-
-
-    def create_review(post)
-      if session[:site]=="foursquare"
-        a=get_foursquare_spot_address(session[:place_id])
-        @place=place_obj(a)
-      elsif session[:site] == "google"
-        a = get_google_spot_address(session[:place_id])
-        @place=place_obj(a)
-      elsif session[:site] == "yelp"
-        a=yelp_spot_address(session[:place_id])
-        @place=place_obj(a)
+    if @place==nil
+      @place=Place.new
+      @place.address=a[0]
+      @place.city=a[1]
+      @place.place_id=session[:place_id]
+      @place.cc=a[2]
+      @place.name=a[3]
+      n=Place.maximum(:id)
+      if n==nil
+        @place.id=0
+      else
+        @place.id=n.next
       end
-      if @place==nil
-        @place=Place.new
-        @place.address=a[0]
-        @place.city=a[1]
-        @place.place_id=session[:place_id]
-        @place.cc=a[2]
-        @place.name=a[3]
-        n=Place.maximum(:id)
-        if n==nil
-          @place.id=0
-        else
-          @place.id=n.next
-        end
 
-        print("\n\nPLACE: "+@place.address)
+      print("\n\nPLACE: "+@place.address)
       #se non è andato a buon fine la creazione del place ritorna errore
-      end
-      #@place.post << post
-      @post=post
-      @post.place=@place
-      if not ( @post.save)
-        return false
-      end
-      #dopo aver verificato che il place sia nel database si crea il post
-      #TODO in @place ci sta il place da considerare
-
     end
+    #@place.post << post
+    @post=post
+    @post.place=@place
+    if not ( @post.save)
+      return false
+    end
+    #dopo aver verificato che il place sia nel database si crea il post
+    #TODO in @place ci sta il place da considerare
 
-    def get_spot_address(place_id) #google places
-      # hash_address ha types, long_name, short_name e i types sono "route, street_number, locality, country, postal_code"
-      @client = GooglePlaces::Client.new("AIzaSyDseOM0g-hw8x_uG1EYJOFQ4uMMR8U57KA")
-      hash_address=Hash.new
-      print("\n\n\n\n"+place_id)
-      addresses = @client.spot(place_id).address_components
-      addresses.each do |a|
-        print("\n\n\n"+a["types"][0].to_s+"\n\n\n")
-        if a["types"][0]=="country" #per country c'è bisogno del cc
-          hash_address[a["types"][0]]=a["short_name"]
-        else
-          hash_address[a["types"][0]]=a["long_name"]
-        end
+  end
+
+  def get_spot_address(place_id) #google places
+    # hash_address ha types, long_name, short_name e i types sono "route, street_number, locality, country, postal_code"
+    @client = GooglePlaces::Client.new("AIzaSyDseOM0g-hw8x_uG1EYJOFQ4uMMR8U57KA")
+    hash_address=Hash.new
+    print("\n\n\n\n"+place_id)
+    addresses = @client.spot(place_id).address_components
+    addresses.each do |a|
+      print("\n\n\n"+a["types"][0].to_s+"\n\n\n")
+      if a["types"][0]=="country" #per country c'è bisogno del cc
+        hash_address[a["types"][0]]=a["short_name"]
+      else
+        hash_address[a["types"][0]]=a["long_name"]
       end
-      hash_address["name"]= @client.spot(place_id).name
-      hash_address
-
     end
+    hash_address["name"]= @client.spot(place_id).name
+    hash_address
 
-    def get_google_spot_address(place_id)
-      hash=get_spot_address(place_id)
-      list=[]
-      list << hash["route"].to_s + " " + hash["street_number"].to_s
-      list << hash["locality"]
-      list << hash["country"]
-      list << hash["name"]
-    end
+  end
+
+  def get_google_spot_address(place_id)
+    hash=get_spot_address(place_id)
+    list=[]
+    list << hash["route"].to_s + " " + hash["street_number"].to_s
+    list << hash["locality"]
+    list << hash["country"]
+    list << hash["name"]
+  end
 
 
-    def place_obj(params)
-      @places=Place.all
-      @places.each do |place|
-        if place.address==params[0] and place.city==params[1] and place.cc==params[2]
-          return place
-        end
+  def place_obj(params)
+    @places=Place.all
+    @places.each do |place|
+      if place.address==params[0] and place.city==params[1] and place.cc==params[2]
+        return place
       end
-      nil
     end
+    nil
+  end
 
 end

@@ -10,9 +10,8 @@ gem 'geokit'
 gem 'google_places'
 gem 'devise'
 gem 'yelp', require: 'yelp'
-gem 'instagram',  :git => 'git://github.com/Instagram/instagram-ruby-gem.git'
-gem 'oauth'
-
+gem 'rails_admin'
+gem 'cancancan'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.2'

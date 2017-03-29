@@ -8,9 +8,10 @@
         <script>
             var autocomplete;
             function send_search(place){
-            $.get( "http://localhost:3000/result", { search : place.formatted_address} ,function(){
               window.location.href = "http://localhost:3000/result"+"?search="+place.formatted_address;
-            });
+            /*$.get( "http://localhost:3000/result", { search : place.formatted_address} ,function(){
+              window.location.href = "http://localhost:3000/result"+"?search="+place.formatted_address;
+            });*/
 
             }
             function initialize() {
