@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
   resources :posts
   devise_for :users
   resources :places
@@ -9,6 +10,7 @@ Rails.application.routes.draw do
   get "/yelpdetails" => "static_pages#yelpdetails"
   get "/foursquaredetails" => "static_pages#foursquaredetails"
   get '404', :to => 'application#page_not_found'
+  get  '/:anything', :to => "application#page_not_found", :constraints => { :anything => /.*/ }
   #get "*all" =>  "application#path_error"
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
