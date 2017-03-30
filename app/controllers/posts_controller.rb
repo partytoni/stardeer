@@ -2,6 +2,8 @@ class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
   load_and_authorize_resource
   helper_method :create_review
+  helper_method :yelp_spot_address
+  helper_method :foursquare_spot_address
 
   # GET /posts
   # GET /posts.json
@@ -44,7 +46,7 @@ class PostsController < ApplicationController
     @post = Post.new(post_params)
     @post.user_id=current_user.id
     create_review(@post)
-    redirect_to "/"
+    redirect_to callback_url(@post)
   end
 
   # PATCH/PUT /posts/1
@@ -52,7 +54,7 @@ class PostsController < ApplicationController
   def update
     respond_to do |format|
       if @post.update(post_params)
-        format.html { redirect_to @post, notice: 'Post was successfully updated.' }
+        format.html { redirect_to callback_url(@post), notice: 'Post was successfully updated.' }
         format.json { render :show, status: :ok, location: @post }
       else
         format.html { render :edit }
@@ -66,12 +68,28 @@ class PostsController < ApplicationController
   def destroy
     @post.destroy
     respond_to do |format|
-      format.html { redirect_to posts_url, notice: 'Post was successfully destroyed.' }
+      print("\n\n\nCURRENT URL: "+request.original_url)
+      format.html { redirect_to callback_url(@post), notice: 'Post was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
   private
+
+  def callback_url(post)
+    place=Place.find(post.place_id)
+    site=place.site
+    if site=='google'
+      site='googledetails'
+    elsif site=='yelp'
+      site='yelpdetails'
+    elsif site=='foursquare'
+      site='foursquaredetails'
+    end
+    place_id=place.place_id
+    return "/"+site+"?id="+place_id
+  end
+
   # Use callbacks to share common setup or constraints between actions.
   def set_post
     @post = Post.find(params[:id])
@@ -85,7 +103,7 @@ class PostsController < ApplicationController
 
   def create_review(post)
     if session[:site]=="foursquare"
-      a=get_foursquare_spot_address(session[:place_id])
+      a=foursquare_spot_address(session[:place_id])
       @place=place_obj(a)
     elsif session[:site] == "google"
       a = get_google_spot_address(session[:place_id])
@@ -108,8 +126,6 @@ class PostsController < ApplicationController
       else
         @place.id=n.next
       end
-
-      print("\n\nPLACE: "+@place.address)
       #se non è andato a buon fine la creazione del place ritorna errore
     end
     #@place.post << post
@@ -149,6 +165,25 @@ class PostsController < ApplicationController
     list << hash["locality"]
     list << hash["country"]
     list << hash["name"]
+  end
+
+  def yelp_spot_address(id)
+    @client=Yelp.client
+    locale = { lang: 'it' }
+    list=[]
+    business= (@client.business(id, locale)).business
+    list << business.location.address[0]
+    list << business.location.city
+    list << business.location.country_code
+    list
+  end
+
+  def foursquare_spot_address(id)
+    client = Foursquare2::Client.new(:client_id => 'YOY24IGK0SILRQEZ4KBQNAFD3GNAHA0Z5SFDBX34M1AS4LYP',
+     :client_secret => 'MQNG4KGWGT0T4DYIYVAFRSJ5JW4U0TDONBDM02MARDWQA3UX',
+     :api_version => '20120609')
+    s = client.venue(id)
+    s.location
   end
 
 

@@ -42,6 +42,18 @@ module StaticPagesHelper
     addresses
   end
 
+  def yelp_spot_address(id)
+    @client=Yelp.client
+    locale = { lang: 'it' }
+    list=[]
+    business= (@client.business(id, locale)).business
+    list << business.location.address[0]
+    list << business.location.city
+    list << business.location.country_code
+    list
+  end
+
+
   def get_reviews(place_id)
     @client = GooglePlaces::Client.new("AIzaSyDseOM0g-hw8x_uG1EYJOFQ4uMMR8U57KA")
     reviews = @client.spot(place_id).reviews
@@ -97,16 +109,7 @@ module StaticPagesHelper
     list << business.image_url
   end
 
-  def yelp_spot_address(id)
-    @client=Yelp.client
-    locale = { lang: 'it' }
-    list=[]
-    business= (@client.business(id, locale)).business
-    list << business.location.address[0]
-    list << business.location.city
-    list << business.location.country_code
-    list
-  end
+
 
   def foursquare_spots()
     client = Foursquare2::Client.new(:client_id => 'YOY24IGK0SILRQEZ4KBQNAFD3GNAHA0Z5SFDBX34M1AS4LYP',
@@ -179,7 +182,7 @@ module StaticPagesHelper
       else
         @posts=p
       end
-      @posts  
+      @posts
     else
       []
     end
