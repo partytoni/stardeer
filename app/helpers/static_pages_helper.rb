@@ -79,6 +79,7 @@ module StaticPagesHelper
 
   def get_place_by_id(place_id)
     @client = GooglePlaces::Client.new("AIzaSyDseOM0g-hw8x_uG1EYJOFQ4uMMR8U57KA")
+    print("\n\n\n["+place_id.class.to_s+"]\n\n\n")
     return @client.spot(place_id)
   end
 
