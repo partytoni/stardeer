@@ -6,6 +6,7 @@
 <%if params[:search] != nil%>
   <% @users.each do |u|%>
     <%= u.name %>
-    <%= link_to "Follow", "/follow/"+u.id%>
+    <%= link_to "Follow", "/follow/"+u.id.to_s%>
+    <br>
   <%end%>
 <%end%>

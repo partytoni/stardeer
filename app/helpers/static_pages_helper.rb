@@ -193,8 +193,5 @@ module StaticPagesHelper
     User.find(id).email
   end
 
-  def search_user(s)
-    @users=[]
-  end
-
+  
 end

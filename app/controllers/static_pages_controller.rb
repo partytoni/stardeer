@@ -36,8 +36,21 @@ class StaticPagesController < ApplicationController
   end
 
   def search
-    search=params[:search]
-    @users = []
+    s=params[:search]
+    @users=[]
+    if s!= nil
+      @all_users = User.all
+      @all_users.each do |u|
+        if u.name!=nil
+          print("\n\n["+s+"] ["+u.name+"]\n\n")
+          name=u.name.downcase
+          if name.include? s
+            @users << u
+          end
+        end
+      end
+    end
+    @users
   end
 
 
