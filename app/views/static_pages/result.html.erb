@@ -21,7 +21,7 @@
       <tr>
         <td><%= spot.name %></td>
         <td><%= spot.rating %></td>
-        <td><%= link_to 'Details', "/googledetails?place_id="+spot.place_id %></td>
+        <td><%= link_to 'Details', "/googledetails?id="+spot.place_id %></td>
         <!-- passa alla pagina details direttamente il place_id dello spot -->
       </tr>
     <% end %>

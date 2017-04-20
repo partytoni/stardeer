@@ -1,8 +1,12 @@
 <% id=params[:id] %>
 <% spot = foursquare_spot(id) %>
 <% address = foursquare_spot_address(id) %>
+<%@posts=get_our_reviews("foursquare",id)%>
 
-<br><br> <%= link_to 'Rate', new_post_path+"?site=foursquare&id="+id%>
+
+<% if not post_already_created?(@posts) %>
+  <br><br> <%= link_to 'Rate', new_post_path+"?site=foursquare&id="+id%>
+<%end%>
 
 <table style="margin:auto;">
   <thead>
@@ -46,7 +50,7 @@
 
 <br>
 Le nostre fighissime recensioni:<br>
-<%@posts=get_our_reviews("foursquare",id)%>
+
 <%@posts=[] if @posts==nil%>
 
 <table>
@@ -62,7 +66,7 @@ Le nostre fighissime recensioni:<br>
   <tbody>
     <% @posts.each do |p| %>
     <tr>
-      <td><%= p.rating %></td>
+      <td><%= "" %></td>
       <td><%= get_user_email(p.user_id)%></td>
       <td><%= p.text %></td>
       <td><%= link_to "Edit", edit_post_path(p.id) if p.user_id==current_user.id %><td>

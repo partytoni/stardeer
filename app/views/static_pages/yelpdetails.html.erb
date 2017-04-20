@@ -6,11 +6,14 @@
 <%username=@review[3]%>
 <%url=@review[4]%>
 <%image_url=@review[5]%>
+<%@posts=get_our_reviews("yelp",id)%>
+
 
 <%if excerpt!=""%>
 
-  <br><br> <%= link_to 'Rate', new_post_path+"?site=yelp&id="+id%>
-
+  <% if not post_already_created?(@posts) %>
+    <br><br> <%= link_to 'Rate', new_post_path+"?site=yelp&id="+id%>
+  <%end%>
 
   <table>
     <thead>
@@ -61,7 +64,7 @@ Le nostre fighissime recensioni:<br>
   <tbody>
     <% @posts.each do |p| %>
     <tr>
-      <td><%= p.rating %></td>
+      <td><%= "" %></td>
       <td><%= get_user_email(p.user_id)%></td>
       <td><%= p.text %></td>
       <td><%= link_to "Edit", edit_post_path(p.id) if p.user_id==current_user.id %><td>

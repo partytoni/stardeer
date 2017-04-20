@@ -46,7 +46,6 @@ class PostsController < ApplicationController
     @post = Post.new(post_params)
     @post.user_id=current_user.id
     create_review(@post)
-    redirect_to callback_url(@post)
   end
 
   # PATCH/PUT /posts/1
@@ -76,19 +75,6 @@ class PostsController < ApplicationController
 
   private
 
-  def callback_url(post)
-    place=Place.find(post.place_id)
-    site=place.site
-    if site=='google'
-      site='googledetails'
-    elsif site=='yelp'
-      site='yelpdetails'
-    elsif site=='foursquare'
-      site='foursquaredetails'
-    end
-    place_id=place.place_id
-    return "/"+site+"?id="+place_id
-  end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_post
@@ -100,8 +86,24 @@ class PostsController < ApplicationController
     params.require(:post).permit(:text)
   end
 
+  def callback_url(post)
+    place=Place.find(post.place_id)
+    site=place.site
+    if site=='google'
+      site='googledetails'
+    elsif site=='yelp'
+      site='yelpdetails'
+    elsif site=='foursquare'
+      site='foursquaredetails'
+    end
+    place_id=place.place_id
+    ret="/"+site+"?id="+place_id
+    print("\n\n\n\nret: "+ret+"\n\n\n\n")
+    ret
+  end
 
   def create_review(post)
+
     if session[:site]=="foursquare"
       a=foursquare_spot_address(session[:place_id])
       @place=place_obj(a)
@@ -112,7 +114,9 @@ class PostsController < ApplicationController
       a=yelp_spot_address(session[:place_id])
       @place=place_obj(a)
     end
-    if @place==nil
+
+
+    if @place==nil #se non esiste già un place, lo crea
       @place=Place.new
       @place.address=a[0]
       @place.city=a[1]
@@ -127,17 +131,27 @@ class PostsController < ApplicationController
         @place.id=n.next
       end
       #se non è andato a buon fine la creazione del place ritorna errore
+
     end
-    #@place.post << post
+
+
+    p=Post.where(user_id:current_user.id, place_id:@place.id)
     @post=post
     @post.place=@place
-    if not ( @post.save)
-      return false
+    if p.length!=0
+      redirect_to callback_url(@post), :alert => "Recensione già inserita"
+    else
+      if not ( @post.save and @place.save)
+        return false
+      end
+      redirect_to callback_url(@post), :alert => "Post Creato Correttamente"
     end
     #dopo aver verificato che il place sia nel database si crea il post
     #TODO in @place ci sta il place da considerare
 
   end
+
+  
 
   def get_spot_address(place_id) #google places
     # hash_address ha types, long_name, short_name e i types sono "route, street_number, locality, country, postal_code"
@@ -146,7 +160,6 @@ class PostsController < ApplicationController
     print("\n\n\n\n"+place_id)
     addresses = @client.spot(place_id).address_components
     addresses.each do |a|
-      print("\n\n\n"+a["types"][0].to_s+"\n\n\n")
       if a["types"][0]=="country" #per country c'è bisogno del cc
         hash_address[a["types"][0]]=a["short_name"]
       else

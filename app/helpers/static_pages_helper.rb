@@ -177,10 +177,10 @@ module StaticPagesHelper
     @place = Place.find_by place_id:place_id, site:site
     if @place
       @posts = []
-      p=Post.find_by place_id:@place.id
+      p=Post.where(place_id:@place.id)
       if p.class==Post
         @posts << p
-      else
+      else #p.class=nil
         @posts=p
       end
       @posts
@@ -193,5 +193,13 @@ module StaticPagesHelper
     User.find(id).email
   end
 
-  
+  def post_already_created?(posts)
+    posts.each do |p|
+      if p.user_id==current_user.id
+        return true
+      end
+    end
+    false
+  end
+
 end

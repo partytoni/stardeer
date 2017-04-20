@@ -179,6 +179,7 @@ module PostsHelper
     list
   end
 
+
   def stampa(stringa)
     num=0
     stringa.each_char do |s|

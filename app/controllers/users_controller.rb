@@ -32,7 +32,12 @@ class UsersController < ApplicationController
       end
       @u.banned=!@u.banned
       if @u.save
-        redirect_to '/ban', :alert => "Bannato correttamente"
+        if @u.banned
+          message= "Bannato correttamente"
+        else
+          message= "Sbannato correttamente"
+        end
+        redirect_to '/ban', :alert => message
       else
         redirect_to '/ban', :alert => "Che cazzo è successo?"
       end
@@ -49,6 +54,13 @@ class UsersController < ApplicationController
   def follow_user
     current_user.follow(User.find(params[:id]))
     redirect_to :back
+  end
+
+  def users_posts(id)
+    @posts=Post.where(user_id: id.to_i)
+    @posts.each do |p|
+      print("\n\n"+p.text)
+    end
   end
 
 
