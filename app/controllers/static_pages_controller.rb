@@ -35,7 +35,10 @@ class StaticPagesController < ApplicationController
     end
   end
 
-
+  def search
+    search=params[:search]
+    @users = []
+  end
 
 
 end

@@ -2,7 +2,12 @@ class UsersController < ApplicationController
   helper_method :users_posts
 
   def index
-    @users = User.all
+    @users1 = User.all
+    @users = []
+    @users1.each do |u|
+      @users << u if current_user.following.include?(u)
+    end
+    @users
   end
 
   def show
@@ -35,5 +40,18 @@ class UsersController < ApplicationController
       redirect_to '/ban'
     end
   end
+
+  def unfollow_user
+    current_user.unfollow(User.find(params[:id]))
+    redirect_to :back #"/users"
+  end
+
+  def follow_user
+    current_user.follow(User.find(params[:id]))
+    redirect_to :back
+  end
+
+
+
 
 end

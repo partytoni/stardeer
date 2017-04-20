@@ -13,5 +13,9 @@ class ApplicationController < ActionController::Base
     redirect_to '/', :alert => "Non esiste nessun post con questo ID"
   end
 
+  rescue_from CanCan::AccessDenied do |e|
+    redirect_to '/', :alert => "You shall not ass"
+  end
+
 
 end

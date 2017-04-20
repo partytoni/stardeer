@@ -1,0 +1,11 @@
+<%= form_tag(search_path, :method => "get", id: "search-form") do %>
+<%= text_field_tag :search, params[:search], placeholder: "Search Users" %>
+<%= submit_tag "Search" %>
+<% end %>
+
+<%if params[:search] != nil%>
+  <% @users.each do |u|%>
+    <%= u.name %>
+    <%= link_to "Follow", "/follow/"+u.id%>
+  <%end%>
+<%end%>
