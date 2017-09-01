@@ -6,7 +6,13 @@
 <%if params[:search] != nil%>
   <% @users.each do |u|%>
     <%= u.name %>
-    <%= link_to "Follow", "/follow/"+u.id.to_s%>
-    <br>
+    <%= u.email %>
+    <% bool=already_followed?(u.id, current_user.id)%>
+    <% if !bool %>
+      <%= link_to "Follow", "/follow/"+u.id.to_s if u.id!=current_user.id%>
+      <br>
+    <%else%>
+      <%= link_to "Unfollow", "/unfollow/"+u.id.to_s if u.id!=current_user.id%>
+    <%end%>
   <%end%>
 <%end%>

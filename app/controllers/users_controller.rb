@@ -52,6 +52,10 @@ class UsersController < ApplicationController
   end
 
   def follow_user
+    if already_followed?(User.find(params[:id]), current_user.id)
+      redirect_to '/search'
+      return
+    end
     current_user.follow(User.find(params[:id]))
     redirect_to :back
   end
@@ -60,6 +64,15 @@ class UsersController < ApplicationController
     @posts=Post.where(user_id: id.to_i)
     @posts.each do |p|
       print("\n\n"+p.text)
+    end
+  end
+
+  def already_followed?(uid, currentid)
+    cose=Relationship.where(["follower_id = ? and followed_id = ?", currentid, uid])
+    if cose==[]
+      return false
+    else
+      return true
     end
   end
 

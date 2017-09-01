@@ -202,4 +202,12 @@ module StaticPagesHelper
     false
   end
 
+  def already_followed?(uid, currentid)
+    cose=Relationship.where(["follower_id = ? and followed_id = ?", currentid, uid])
+    if cose==[]
+      return false
+    else
+      return true
+    end
+  end
 end
