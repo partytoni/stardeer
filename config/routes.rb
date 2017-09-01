@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   get '/follow/:id' => 'users#follow_user'
   get '/ban/:id' => 'users#ban_user'
   get '/ban' => "static_pages#ban"
+  get '/profile' => "static_pages#profile"
   get '/result' => "static_pages#result"
   get "/googledetails" => "static_pages#googledetails"
   get "/yelpdetails" => "static_pages#yelpdetails"

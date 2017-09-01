@@ -19,6 +19,9 @@ class StaticPagesController < ApplicationController
   def result
   end
 
+  def profile
+  end
+
   def googledetails
   end
 

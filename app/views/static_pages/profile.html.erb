@@ -1,0 +1,31 @@
+Questa è la tua cazzo di pagina diocaprino.
+
+
+<table>
+    <tr>
+      <h1><%=current_user.name%> </h1>
+    </tr>
+    <tr>
+      <th colspan="4"><img alt="persona" data-entity-type="file" data-entity-uuid="67bc7b9d-f8d8-4d4b-89e3-82c559bfaa83" src="https://forumone.com/ideas/elements-of-a-persona/sites/default/files/images/Persona2.jpeg"></th>
+    </tr>
+    <tr>
+      <%=hash_address%>
+    </tr>
+    <tr>
+      <th>Rating num</th>
+      <th>Name of the Author</th>
+      <th>Review</th>
+      <th colspan="3"></th>
+    </tr>
+
+    <% posts = Post.joins("INNER JOIN places ON places.id = posts.place_id AND post.user_id="+current_user.id)%>
+    <% posts.each do |p| %>
+    <tr>
+      <td><%= p.text %></td>
+      <td><%= p.user_id %></td>
+      <td><%= p.name %></td>
+      <td><%= p.address %></td>
+      <!-- passa alla pagina details direttamente il place_place_id dello spot -->
+      <% end %>
+    </tr>
+</table>
