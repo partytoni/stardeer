@@ -49,6 +49,12 @@
 <%end%>
 
 <br>
+<%=foursquare_spot(id)["name"]%>
+<%=foursquare_spot_address(id)["address"]%>
+<%=foursquare_spot_address(id)["cc"]%>
+<%=foursquare_spot_address(id)["city"]%>
+
+<br>
 Le nostre fighissime recensioni:<br>
 
 <%@posts=[] if @posts==nil%>

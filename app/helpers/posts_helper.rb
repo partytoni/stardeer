@@ -194,4 +194,24 @@ module PostsHelper
       end
     end
   end
+
+  def foursquare_spot(id)
+    client = Foursquare2::Client.new(:client_id => 'YOY24IGK0SILRQEZ4KBQNAFD3GNAHA0Z5SFDBX34M1AS4LYP',
+     :client_secret => 'MQNG4KGWGT0T4DYIYVAFRSJ5JW4U0TDONBDM02MARDWQA3UX',
+     :api_version => '20120609')
+    s = client.venue(id)
+    res = Hash.new
+    res["name"] = s.name
+    if s.rating!=nil
+      res["rating"] = (s.rating).to_s + "su 10"
+    else
+      res["rating"] = "Nessuno"
+    end
+    res["phrases"] = s.phrases
+    res["photos"] = []
+    s.photos[:groups][0][:items].each do |i|
+        res["photos"] << i[:prefix]+"500x300"+i[:suffix]
+    end
+    res
+  end
 end

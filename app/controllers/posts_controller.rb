@@ -197,8 +197,13 @@ class PostsController < ApplicationController
     client = Foursquare2::Client.new(:client_id => 'YOY24IGK0SILRQEZ4KBQNAFD3GNAHA0Z5SFDBX34M1AS4LYP',
      :client_secret => 'MQNG4KGWGT0T4DYIYVAFRSJ5JW4U0TDONBDM02MARDWQA3UX',
      :api_version => '20120609')
-    s = client.venue(id)
-    s.location
+    s = client.venue(id).location
+    list=[]
+    list << s["address"]
+    list << s["city"]
+    list << s["cc"]
+    list << foursquare_spot(id)["name"]
+    print("\n\n\n\n\n\n\n\n\n"+list.inspect+"\n\n\n\n\n\n\n\n\n")
   end
 
 

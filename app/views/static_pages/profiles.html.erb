@@ -1,0 +1,16 @@
+<% id=params[:id] %>
+
+<% user=User.where("id=" + id).first %>
+
+<tr>
+  <h1><%=user.name%> </h1>
+</tr>
+
+<% post=Post.where("user_id="+user.id.to_s) %>
+<% post.each do |p| %>
+  <% place=from_post_to_place(p) %>
+  <%= place.inspect %>
+  <%= link_to place.name, callback_url(p) %>
+  <%= p.text %>
+  <br>
+<% end %>

@@ -227,3 +227,15 @@ def callback_url(post)
   print("\n\n\n\nret: "+ret+"\n\n\n\n")
   ret
 end
+
+def from_post_to_place(post)
+  place=Place.where("id =" + post.place_id.to_s).first
+end
+
+def from_user_to_posts(user)
+  post=Post.where("id =" + user.id.to_s)
+end
+
+def from_post_to_user(post)
+  user=User.where("id =" + post.post_id.to_s).first
+end
