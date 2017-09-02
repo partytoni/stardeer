@@ -9,7 +9,6 @@
 <% post=Post.where("user_id="+user.id.to_s) %>
 <% post.each do |p| %>
   <% place=from_post_to_place(p) %>
-  <%= place.inspect %>
   <%= link_to place.name, callback_url(p) %>
   <%= p.text %>
   <br>

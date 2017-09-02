@@ -23,8 +23,8 @@
       <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %> |
       <%= link_to "Search User", search_path %> |
       <%= link_to "Home", root_path %> |
-      <%= link_to "Admin", '/admin'%> |
-      <%= link_to "Ban", '/ban'%> |
+      <%= link_to "Admin", '/admin' if current_user.superadmin_role? or current_user.supervisor_role? %> |
+      <%= link_to "Ban", '/ban' if current_user.superadmin_role? or current_user.supervisor_role?%> |
       <%= link_to "Profile", '/my_profile' %> |
       <%= "Your id is "+current_user.id.to_s %>
     <% else %>

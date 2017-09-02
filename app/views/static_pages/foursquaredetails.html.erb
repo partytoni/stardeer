@@ -13,7 +13,7 @@
     <tr>
       <th colspan="3"><%= spot["name"]%></th>
       <%if address["address"]!=nil%>
-        <th colspan="3"><%= address["address"]+", "+address["city"]+", "+address["cc"]%></th>
+        <th colspan="3"><%= address["address"].to_s+", "+address["city"].to_s+", "+address["cc"].to_s%></th>
       <%end%>
     </tr>
 

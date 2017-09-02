@@ -88,7 +88,11 @@ module StaticPagesHelper
     params = {}
     locale = { lang: 'it' }
     coordinates = { latitude: session[:lat], longitude: session[:lng] }
-    return @client.search_by_coordinates(coordinates, params, locale).businesses
+    begin
+      @client.search_by_coordinates(coordinates, params, locale).businesses
+    rescue => error
+      return []
+    end
   end
 
   def yelp_review(id)
@@ -135,8 +139,11 @@ module StaticPagesHelper
     end
     res["phrases"] = s.phrases
     res["photos"] = []
-    s.photos[:groups][0][:items].each do |i|
-        res["photos"] << i[:prefix]+"500x300"+i[:suffix]
+    begin
+      s.photos[:groups][0][:items].each do |i|
+          res["photos"] << i[:prefix]+"500x300"+i[:suffix]
+      end
+    rescue
     end
     res
   end
