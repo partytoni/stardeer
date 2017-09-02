@@ -211,3 +211,19 @@ module StaticPagesHelper
     end
   end
 end
+
+def callback_url(post)
+  place=Place.find(post.place_id)
+  site=place.site
+  if site=='google'
+    site='googledetails'
+  elsif site=='yelp'
+    site='yelpdetails'
+  elsif site=='foursquare'
+    site='foursquaredetails'
+  end
+  place_id=place.place_id
+  ret="/"+site+"?id="+place_id
+  print("\n\n\n\nret: "+ret+"\n\n\n\n")
+  ret
+end

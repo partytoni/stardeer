@@ -1,0 +1,31 @@
+Questa è la tua cazzo di pagina diocaprino.
+
+<tr>
+  <h1><%=current_user.name%> </h1>
+</tr>
+
+<table style="margin:auto;">
+  <thead>
+    <tr>
+      <th>Name of the Author</th>
+      <th>Review</th>
+      <th>Place</th>
+      <th colspan="4"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% posts=Post.where("user_id = "+current_user.id.to_s)%>
+    <% posts.each do |p|%>
+      <% place=Place.where("id = "+p.place_id.to_s) %>
+      <tr>
+        <%= current_user.name%>
+        <%= p.text %>
+        <%= place.first.name %>
+        <%= link_to callback_url(p), callback_url(p) %>
+        <!-- passa alla pagina details direttamente il place_place_id dello spot -->
+      </tr>
+      <br>
+    <% end %>
+  </tbody>
+</table>

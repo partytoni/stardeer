@@ -1,0 +1,11 @@
+<tr>
+  <h1><%=current_user.name%> </h1>
+</tr>
+
+Chi segui:
+<% follower = Relationship.where("follower_id =" + current_user.id) %>
+<% follower.each do |f|%>
+  <% u=User.where("id =" + f.followed_id) %>
+  <%= u.name %>
+
+Chi ti stalkera:

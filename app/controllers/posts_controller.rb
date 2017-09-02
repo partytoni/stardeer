@@ -115,7 +115,7 @@ class PostsController < ApplicationController
       @place=place_obj(a)
     end
 
-
+    print("\n\n\ncose"+ a.inspect+"\n\n\n")
     if @place==nil #se non esiste già un place, lo crea
       @place=Place.new
       @place.address=a[0]
@@ -151,7 +151,7 @@ class PostsController < ApplicationController
 
   end
 
-  
+
 
   def get_spot_address(place_id) #google places
     # hash_address ha types, long_name, short_name e i types sono "route, street_number, locality, country, postal_code"
@@ -185,9 +185,11 @@ class PostsController < ApplicationController
     locale = { lang: 'it' }
     list=[]
     business= (@client.business(id, locale)).business
+    print("\n\n\n\n"+business.name+"\n\n\n\n\n" )
     list << business.location.address[0]
     list << business.location.city
     list << business.location.country_code
+    list << business.name
     list
   end
 

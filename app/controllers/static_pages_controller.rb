@@ -56,5 +56,8 @@ class StaticPagesController < ApplicationController
     @users
   end
 
+  def profiles
+  end
+
 
 end
