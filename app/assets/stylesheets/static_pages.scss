@@ -1,3 +1,27 @@
 // Place all the styles related to the StaticPages controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+$giallo-figo : #e5c920	;
+#autocomplete {
+    width: 200px;
+    padding: 12px 20px 12px 40px;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+#autocomplete:focus {
+    width: 220px;
+}
+body{
+  background-color: #aaa;
+  a {
+    color: #333;
+  }
+}
+.navbar-text{
+  background-color: $giallo-figo;
+  padding: 12px 20px 12px 40px;
+  font-family: helvetica;
+}

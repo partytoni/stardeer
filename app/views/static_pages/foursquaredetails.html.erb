@@ -70,14 +70,19 @@ Le nostre fighissime recensioni:<br>
   </thead>
 
   <tbody>
+    <% m=0 %>
     <% @posts.each do |p| %>
     <tr>
-      <td><%= "" %></td>
+      <% m=m+p.rating;%>
+      <td><%=  p.rating.to_s  %></td>
       <td><%= get_user_email(p.user_id)%></td>
       <td><%= p.text %></td>
       <td><%= link_to "Edit", edit_post_path(p.id) if p.user_id==current_user.id %><td>
       <td><%= link_to "Destroy", post_path(p.id), method: :delete, data: {confirm: "Are you ssssure?"} if p.user_id==current_user.id %><td>
       <% end %>
+    </tr>
+    <tr>
+      <%="Valutazione Media :" + (m/@posts.length).to_s if @posts.length > 0 %>
     </tr>
   </tbody>
 </table>

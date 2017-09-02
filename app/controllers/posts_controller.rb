@@ -21,8 +21,11 @@ class PostsController < ApplicationController
   def new
     @post = Post.new
     if params[:site]!=nil and params[:id]!=nil
+      print("\n\n\n cristo "+params.inspect+"\n\n")
       session[:site]=params[:site]
       session[:place_id]=params[:id]
+      #session[:rating] = params[:rating]
+
     else
       redirect_to '/404'
     end
@@ -83,7 +86,7 @@ class PostsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def post_params
-    params.require(:post).permit(:text)
+    params.require(:post).permit(:text, :rating)
   end
 
   def callback_url(post)

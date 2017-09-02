@@ -15,3 +15,7 @@ User.create!(name: "Antonio Schifino",
              password:              "123456",
              password_confirmation: "123456",
              supervisor_role: true)
+User.create!(name: "Antonio Porcino",
+             email: "porcy@gmail.com",
+             password:              "123456",
+             password_confirmation: "123456")

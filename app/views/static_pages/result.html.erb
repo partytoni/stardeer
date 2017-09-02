@@ -1,12 +1,12 @@
 <%address=params[:search]%>
 <%@spots=get_spots(address)%>
 <%@yelp_spots=yelp_spots()%>
-<table>
+<table border="1">
 <tr>
 
 <td>
 
-<table>
+<table border="1">
   Google Results
   <thead>
     <tr>
@@ -26,10 +26,10 @@
       </tr>
     <% end %>
   </tbody>
-</table>
+</table >
 </td>
 <td>
-<table>
+<table border="1">
   Yelp Results
   <thead>
     <tr>
@@ -50,7 +50,7 @@
 </table>
 </td>
 <td>
-<table>
+<table border="1">
   foursquare Results
   <thead>
     <tr>
@@ -70,7 +70,6 @@
   </tbody>
 </table>
 </td>
-
 </tr>
 </table>
 
