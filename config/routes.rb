@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
   resources :posts
-  devise_for :user, :controllers => { registrations: 'registration' }
+  devise_for :user, :controllers => { registrations: 'registration', confirmations: 'confirmations' }
   resources :places
   resources :users do
     member do
