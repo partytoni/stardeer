@@ -1,0 +1,20 @@
+<% user=User.where("id=" + id).first %>
+
+<tr>
+  <h1>
+    <%= image_tag(current_user.avatar_url, size: "100x100") if current_user.avatar? %>
+    <%=current_user.name%>
+  </h1>
+</tr>
+
+<%= link_to "Chi segui e chi ti si incula", "/your_follows" if me=="true" %>
+<br><br>
+
+Recensioni dell'utente:<br>
+<% post=Post.where("user_id="+user.id.to_s) %>
+<% post.each do |p| %>
+  <% place=from_post_to_place(p) %>
+  <%= link_to place.name, callback_url(p) %>
+  <%= p.text %>
+  <br>
+<% end %>

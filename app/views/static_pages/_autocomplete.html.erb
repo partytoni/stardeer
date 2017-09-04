@@ -8,7 +8,13 @@
         <script>
             var autocomplete;
             function send_search(place){
-              window.location.href = "http://localhost:3000/result"+"?search="+place.formatted_address;
+              posto = place.formatted_address;
+              if (typeof place.formatted_address == "undefined"){
+                posto = place.name;
+                window.alert("DIO 1 " + JSON.stringify(place));
+              }
+              window.location.href = "http://localhost:3000/result"+"?search=" + posto;
+
             /*$.get( "http://localhost:3000/result", { search : place.formatted_address} ,function(){
               window.location.href = "http://localhost:3000/result"+"?search="+place.formatted_address;
             });*/
