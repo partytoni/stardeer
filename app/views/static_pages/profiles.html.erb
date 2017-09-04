@@ -3,7 +3,10 @@
 <% user=User.where("id=" + id).first %>
 
 <tr>
-  <h1><%=user.name%> </h1>
+  <h1>
+    <%= image_tag(user.avatar_url, size: "100x100") if user.avatar? %>
+    <%=user.name%>
+  </h1>
 </tr>
 
 <% post=Post.where("user_id="+user.id.to_s) %>
