@@ -13,6 +13,8 @@ gem 'yelp', require: 'yelp'
 gem 'rails_admin'
 gem 'cancancan'
 gem 'rails-erd', require: false, group: :development #for generating ER diagram
+gem 'carrierwave'
+
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.2'
