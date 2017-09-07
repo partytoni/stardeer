@@ -6,4 +6,6 @@ class Post < ApplicationRecord
   validates :rating, presence: true
   validates_inclusion_of :rating, :in => 1..5
   validates :place_id, presence: true
+
+  validates_uniqueness_of :place_id,    scope: :user_id
 end
