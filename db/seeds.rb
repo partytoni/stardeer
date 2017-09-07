@@ -9,13 +9,16 @@ User.create!(name:"SuperAmministratore Fighinculo",
              email: "martemmuccio@gmail.com",
              password:              "password",
              password_confirmation: "password",
-             superadmin_role: true)
+             superadmin_role: true,
+             confirmed_at: DateTime.now)
 User.create!(name: "Antonio Schifino",
              email: "ant.mar94@gmail.com",
              password:              "123456",
              password_confirmation: "123456",
-             supervisor_role: true)
+             supervisor_role: true,
+             confirmed_at: DateTime.now)
 User.create!(name: "Antonio Porcino",
              email: "porcy@gmail.com",
              password:              "123456",
-             password_confirmation: "123456")
+             password_confirmation: "123456",
+             confirmed_at: DateTime.now)
