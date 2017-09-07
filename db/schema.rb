@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170904163638) do
+ActiveRecord::Schema.define(version: 20170907151834) do
 
   create_table "places", force: :cascade do |t|
     t.string   "name"
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 20170904163638) do
     t.string   "place_id"
     t.string   "city"
     t.string   "cc"
+    t.index ["site", "place_id"], name: "index_places_on_site_and_place_id", unique: true
   end
 
   create_table "posts", force: :cascade do |t|
