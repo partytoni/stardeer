@@ -47,7 +47,7 @@
 <%= yelp_spot_address(id) %>
 
 <br>
-Le nostre fighissime recensioni:<br>
+Our reviews:<br>
 <%@posts=get_our_reviews("yelp",id)%>
 <%@posts=[] if @posts==nil%>
 

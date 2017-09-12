@@ -21,11 +21,9 @@ class PostsController < ApplicationController
   def new
     @post = Post.new
     if params[:site]!=nil and params[:id]!=nil
-      print("\n\n\n cristo "+params.inspect+"\n\n")
       session[:site]=params[:site]
       session[:place_id]=params[:id]
       #session[:rating] = params[:rating]
-
     else
       redirect_to '/404'
     end
@@ -70,7 +68,6 @@ class PostsController < ApplicationController
   def destroy
     @post.destroy
     respond_to do |format|
-      print("\n\n\nCURRENT URL: "+request.original_url)
       format.html { redirect_to callback_url(@post), notice: 'Post was successfully destroyed.' }
       format.json { head :no_content }
     end
@@ -101,12 +98,10 @@ class PostsController < ApplicationController
     end
     place_id=place.place_id
     ret="/"+site+"?id="+place_id
-    print("\n\n\n\nret: "+ret+"\n\n\n\n")
     ret
   end
 
   def create_review(post)
-
     if session[:site]=="foursquare"
       a=foursquare_spot_address(session[:place_id])
       @place=place_obj(a)
@@ -118,7 +113,6 @@ class PostsController < ApplicationController
       @place=place_obj(a)
     end
 
-    print("\n\n\ncose"+ a.inspect+"\n\n\n")
     if @place==nil #se non esiste già un place, lo crea
       @place=Place.new
       @place.address=a[0]
@@ -134,7 +128,6 @@ class PostsController < ApplicationController
         @place.id=n.next
       end
       #se non è andato a buon fine la creazione del place ritorna errore
-
     end
 
 
@@ -154,13 +147,10 @@ class PostsController < ApplicationController
 
   end
 
-
-
   def get_spot_address(place_id) #google places
     # hash_address ha types, long_name, short_name e i types sono "route, street_number, locality, country, postal_code"
     @client = GooglePlaces::Client.new("AIzaSyDseOM0g-hw8x_uG1EYJOFQ4uMMR8U57KA")
     hash_address=Hash.new
-    print("\n\n\n\n"+place_id)
     addresses = @client.spot(place_id).address_components
     addresses.each do |a|
       if a["types"][0]=="country" #per country c'è bisogno del cc
@@ -188,7 +178,6 @@ class PostsController < ApplicationController
     locale = { lang: 'it' }
     list=[]
     business= (@client.business(id, locale)).business
-    print("\n\n\n\n"+business.name+"\n\n\n\n\n" )
     list << business.location.address[0]
     list << business.location.city
     list << business.location.country_code
@@ -208,7 +197,6 @@ class PostsController < ApplicationController
     list << foursquare_spot(id)["name"]
     list
   end
-
 
   def place_obj(params)
     @places=Place.all

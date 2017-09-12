@@ -32,10 +32,6 @@ module PostsHelper
 
   end
 
-  def ciao
-    print("ciao")
-  end
-
   def place_obj(params)
     @places=Place.all
     @places.each do |place|
@@ -56,8 +52,6 @@ module PostsHelper
     @spots = @client.spots(lat, lng)
     return @spots
   end
-
-
 
   def get_spot_location(place_id) #google location
     # hash_address ha types, long_name, short_name e i types sono "route, street_number, locality, country, postal_code"
@@ -138,8 +132,6 @@ module PostsHelper
      :client_secret => 'MQNG4KGWGT0T4DYIYVAFRSJ5JW4U0TDONBDM02MARDWQA3UX',
      :api_version => '20120609')
     spots=client.search_venues(:ll => session[:lat]+","+session[:lng])
-    #print("\n\nROBE\n\n"+spots.to_s)
-
   end
 
   def foursquare_spot(id)
@@ -180,20 +172,20 @@ module PostsHelper
   end
 
 
-  def stampa(stringa)
-    num=0
-    stringa.each_char do |s|
-      if s=="<"
-        num=num+1
-        print("\n"+("\t")*num+s)
-      elsif s==">"
-        num=num-1
-        print(s+"\n"+("\t")*num)
-      else
-        print(s)
-      end
-    end
-  end
+#  def stampa(stringa)
+#    num=0
+#    stringa.each_char do |s|
+#      if s=="<"
+#        num=num+1
+#        print("\n"+("\t")*num+s)
+#      elsif s==">"
+#        num=num-1
+#        print(s+"\n"+("\t")*num)
+#      else
+#        print(s)
+#      end
+#    end
+#  end
 
 
 end

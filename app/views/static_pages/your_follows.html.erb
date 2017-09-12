@@ -2,7 +2,7 @@
   <h1><%=current_user.name%> </h1>
 </tr>
 
-Chi segui:
+Followed:
 <% follower = Relationship.where("follower_id =" + current_user.id.to_s) %>
 <% follower.each do |f|%>
   <% u=User.where("id =" + f.followed_id.to_s) %>
@@ -10,7 +10,7 @@ Chi segui:
 <%end%>
 <br>
 <br>
-Chi ti stalkera:
+Followers:
 <% followed = Relationship.where("followed_id =" + current_user.id.to_s) %>
 <% followed.each do |f|%>
   <% u=User.where("id =" + f.follower_id.to_s) %>

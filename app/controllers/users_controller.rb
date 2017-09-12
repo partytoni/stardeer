@@ -25,7 +25,6 @@ class UsersController < ApplicationController
 
   def ban_user #lo fa l'admin
     if current_user.superadmin_role? or current_user.supervisor_role?
-      print("\n\n\nbanna sto cazzo\n\n\n")
       @u=User.find(params[:id])
       if @u.superadmin_role? or @u.supervisor_role
         redirect_to "/ban" and return
@@ -39,7 +38,7 @@ class UsersController < ApplicationController
         end
         redirect_to '/ban', :alert => message
       else
-        redirect_to '/ban', :alert => "Che cazzo è successo?"
+        redirect_to '/ban', :alert => "Panico"
       end
     else
       redirect_to '/ban'
@@ -75,8 +74,5 @@ class UsersController < ApplicationController
       return true
     end
   end
-
-
-
 
 end

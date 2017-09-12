@@ -11,7 +11,6 @@
               posto = place.formatted_address;
               if (typeof place.formatted_address == "undefined"){
                 posto = place.name;
-                window.alert("DIO 1 " + JSON.stringify(place));
               }
               window.location.href = "http://localhost:3000/result"+"?search=" + posto;
 
@@ -21,7 +20,7 @@
 
             }
             function initialize() {
-               var input = document.getElementById('autocomplete');
+              var input = document.getElementById('autocomplete');
               var searchBox = new google.maps.places.SearchBox(input);
               autocomplete = new google.maps.places.Autocomplete(
                   /** @type {HTMLInputElement} */(input),

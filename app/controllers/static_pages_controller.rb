@@ -4,13 +4,12 @@ require 'uri'
 class StaticPagesController < ApplicationController
   before_action :banned?
 
-
   def home
   end
 
   def ban
     if !current_user.superadmin_role? and !current_user.supervisor_role?
-      redirect_to '/', :alert => "You shall not ass"
+      redirect_to '/', :alert => "You shall not pass"
     else
       @users=User.all
     end
@@ -45,7 +44,6 @@ class StaticPagesController < ApplicationController
       @all_users = User.all
       @all_users.each do |u|
         if u.name!=nil
-          print("\n\n["+s+"] ["+u.name+"]\n\n")
           name=u.name.downcase
           if name.include? s
             @users << u

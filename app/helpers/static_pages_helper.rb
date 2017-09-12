@@ -16,7 +16,6 @@ module StaticPagesHelper
     hash_address=Hash.new
     addresses = @client.spot(place_id).address_components
     addresses.each do |a|
-      print("\n\n\n"+a["types"][0].to_s+"\n\n\n")
       if a["types"][0]=="country" #per country c'è bisogno del cc
         hash_address[a["types"][0]]=a["short_name"]
       else
@@ -121,8 +120,6 @@ module StaticPagesHelper
      :client_secret => 'MQNG4KGWGT0T4DYIYVAFRSJ5JW4U0TDONBDM02MARDWQA3UX',
      :api_version => '20120609')
     spots=client.search_venues(:ll => session[:lat]+","+session[:lng])
-    #print("\n\nROBE\n\n"+spots.to_s)
-
   end
 
   def foursquare_spot(id)
@@ -165,20 +162,20 @@ module StaticPagesHelper
     list
   end
 
-  def stampa(stringa)
-    num=0
-    stringa.each_char do |s|
-      if s=="<"
-        num=num+1
-        print("\n"+("\t")*num+s)
-      elsif s==">"
-        num=num-1
-        print(s+"\n"+("\t")*num)
-      else
-        print(s)
-      end
-    end
-  end
+#  def stampa(stringa)
+#    num=0
+#    stringa.each_char do |s|
+#      if s=="<"
+#        num=num+1
+#        print("\n"+("\t")*num+s)
+#      elsif s==">"
+#        num=num-1
+#        print(s+"\n"+("\t")*num)
+#      else
+#        print(s)
+#      end
+#    end
+#  end
 
   def get_our_reviews(site, place_id)
     @place = Place.find_by place_id:place_id, site:site
@@ -231,7 +228,6 @@ def callback_url(post)
   end
   place_id=place.place_id
   ret="/"+site+"?id="+place_id
-  print("\n\n\n\nret: "+ret+"\n\n\n\n")
   ret
 end
 

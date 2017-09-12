@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
   end
 
   rescue_from CanCan::AccessDenied do |e|
-    redirect_to '/', :alert => "You shall not ass"
+    redirect_to '/', :alert => "You shall not pass"
   end
 
 

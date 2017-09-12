@@ -41,6 +41,4 @@ RSpec.describe Post do
     expect(post).not_to be_valid
   end
 
-
-
 end
