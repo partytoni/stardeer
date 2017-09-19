@@ -41,8 +41,6 @@ RSpec.describe Post do
     expect(post).not_to be_valid
   end
 
-<<<<<<< HEAD
-=======
   it "is already in the db (unique: user_id-place_id)" do
     Post.create(user_id: 1, text: "a"*139, rating: 1, place_id: 1)
     post=Post.new(user_id: 1, text: "a"*139, rating: 1, place_id: 1)
@@ -50,6 +48,4 @@ RSpec.describe Post do
   end
 
 
-
->>>>>>> master
 end
