@@ -18,6 +18,11 @@ gem 'carrierwave'
 gem 'rspec'
 gem 'rspec-rails'
 gem 'capybara'
+gem 'rails-controller-testing'
+
+group :development, :test do
+  gem 'factory_girl_rails'
+end
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.2'
