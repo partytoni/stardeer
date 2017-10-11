@@ -4,13 +4,11 @@
 <% hash_address=get_google_spot_address(place_id)%>
 <% location=get_spot_location(place_id)%>
 <%@posts=get_our_reviews("google",place_id)%>
-
-<% if not post_already_created?(@posts) %>
-  <br><br> <%= link_to 'Rate', new_post_path+"?site=google&id="+place_id%>
-<%end%>
+<center>
 
 
-<table>
+
+<table class="dets">
   <thead>
     <tr>
       <th colspan="3"><%= link_to place.name, place.url, target: :_blank %></th>
@@ -45,10 +43,14 @@
   <%=image_tag(get_image(link))%>
 <%end%>
 
-<br>
-Our reviews:<br>
+<% if not post_already_created?(@posts) %>
+  <h2>Rate:</h2>
+  <%= link_to 'Write a new review.', new_post_path+"?site=google&id="+place_id%>
+<%end%>
 
-<table>
+<h2>Our reviews:</h2>
+
+<table class="dets">
   <thead>
     <tr>
       <th>Rating num</th>
@@ -71,7 +73,8 @@ Our reviews:<br>
       <% end %>
     </tr>
     <tr>
-      <%="Valutazione Media :" + (m/@posts.length).to_s if @posts.length > 0 %>
+      <%="Average Rating: " + (m/@posts.length).to_s if @posts.length > 0 %>
     </tr>
   </tbody>
 </table>
+</center>

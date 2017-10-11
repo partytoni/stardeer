@@ -1,3 +1,4 @@
+<center>
 <tr>
   <h1><%=current_user.name%> </h1>
 </tr>
@@ -16,3 +17,4 @@ Followers:
   <% u=User.where("id =" + f.follower_id.to_s) %>
   <%= link_to u.first.name, "/profiles/"+u.first.id.to_s %>
 <%end%>
+</center>

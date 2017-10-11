@@ -13,3 +13,64 @@
  *= require_tree .
  *= require_self
  */
+a{
+  color: #5FA6AF;
+  padding: 2px;
+}
+a:visited{
+  color: #e9bc4b;
+}
+a:hover{
+  background-color: #495F99;
+  color: #CCC091;
+}
+body{
+  background-color: #ffffff;
+  color : #495F88;
+  font-family:  helvetica,verdana, arial, sans-serif;
+  font-size: 12pt;
+  line-height: 12pt;
+  margin: 33px;
+}
+.navbar-text{
+  -webkit-box-shadow: 2px 2px 8px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 2px 2px 8px 0px rgba(0,0,0,0.75);
+  box-shadow: 2px 2px 8px 0px rgba(0,0,0,0.75);
+  color: #ffffff;
+}
+form{
+  width:40%;
+  margin : auto;
+  border: 1px solid #e9bc4b;
+  box-shadow: 2px 2px 8px 0px rgba(0,0,0,0.75);
+  padding : 10px;
+}
+
+input[type=submit] {
+    padding:12px 20px 12px 20px;
+    color: #495F99;
+    background:#ffffff;
+    border: 1px solid #e9bc4b;
+    font-weight: bolder;
+    display: inline-block;
+}
+input[type=submit]:hover {
+    color: #ffffff;
+    background:#495F99;
+    border: 1px solid #495F99;
+    display: inline-block;
+}
+input[type=email], input[type=password],input[type=text]{
+  width: 200px;
+  padding: 12px 20px 12px 40px;
+  margin-left: auto;
+  margin-right: auto;
+}
+div.field{
+  padding-top: 15px;
+  padding-bottom: 15px;
+  line-height: 11pt;
+}
+i, em{
+  font-size: 8pt;
+}

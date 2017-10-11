@@ -1,3 +1,4 @@
+<center>
 <p id="notice"><%= notice %></p>
 <% place_id= @post.place_id %>
 <% @place = Place.find(place_id)%>
@@ -24,3 +25,4 @@
 
 <%= link_to 'Edit', edit_post_path(@post) if sei_proprio_tu?(@post)%> |
 <%= link_to 'Back', posts_path %>
+</center>

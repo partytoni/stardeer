@@ -2,13 +2,9 @@
 <% spot = foursquare_spot(id) %>
 <% address = foursquare_spot_address(id) %>
 <%@posts=get_our_reviews("foursquare",id)%>
+<center>
 
-
-<% if not post_already_created?(@posts) %>
-  <br><br> <%= link_to 'Rate', new_post_path+"?site=foursquare&id="+id%>
-<%end%>
-
-<table style="margin:auto;">
+<table class="dets">
   <thead>
     <tr>
       <th colspan="3"><%= spot["name"]%></th>
@@ -54,12 +50,15 @@
 <%=foursquare_spot_address(id)["cc"]%>
 <%=foursquare_spot_address(id)["city"]%>
 
-<br>
-Our reviews:<br>
+<% if not post_already_created?(@posts) %>
+  <h2>Rate:</h2>
+  <%= link_to 'Write a new review.', new_post_path+"?site=foursquare&id="+id%>
+<%end%>
 
+<h2>Our reviews:</h2>
 <%@posts=[] if @posts==nil%>
 
-<table>
+<table class="dets">
   <thead>
     <tr>
       <th>Rating num</th>
@@ -82,7 +81,8 @@ Our reviews:<br>
       <% end %>
     </tr>
     <tr>
-      <%="Valutazione Media :" + (m/@posts.length).to_s if @posts.length > 0 %>
+      <%="Average Rating: " + (m/@posts.length).to_s if @posts.length > 0 %>
     </tr>
   </tbody>
 </table>
+</center>

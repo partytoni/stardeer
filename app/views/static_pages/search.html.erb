@@ -1,18 +1,22 @@
+<center>
 <%= form_tag(search_path, :method => "get", id: "search-form") do %>
 <%= text_field_tag :search, params[:search], placeholder: "Search Users" %>
 <%= submit_tag "Search" %>
 <% end %>
 
 <%if params[:search] != nil%>
+<h2>Results:</h2>
   <% @users.each do |u|%>
-    <%= u.name %>
-    <%= u.email %>
+    <%= u.name %> &nbsp;&nbsp;
+    <%= u.email %> &nbsp;&nbsp;
     <% bool=already_followed?(u.id, current_user.id)%>
     <% if !bool %>
       <%= link_to "Follow", "/follow/"+u.id.to_s if u.id!=current_user.id%>
       <br>
     <%else%>
       <%= link_to "Unfollow", "/unfollow/"+u.id.to_s if u.id!=current_user.id%>
+      <br>
     <%end%>
   <%end%>
 <%end%>
+</center>

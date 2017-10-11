@@ -8,14 +8,10 @@
 <%image_url=@review[5]%>
 <%@posts=get_our_reviews("yelp",id)%>
 
-
+<center>
 <%if excerpt!=""%>
 
-  <% if not post_already_created?(@posts) %>
-    <br><br> <%= link_to 'Rate', new_post_path+"?site=yelp&id="+id%>
-  <%end%>
-
-  <table>
+  <table class="dets">
     <thead>
       <tr>
         <%= image_tag(image_url) %>
@@ -46,12 +42,16 @@
 
 <%= yelp_spot_address(id) %>
 
-<br>
-Our reviews:<br>
+<% if not post_already_created?(@posts) %>
+  <h2>Rate:</h2>
+  <%= link_to 'Write a new review.', new_post_path+"?site=yelp&id="+id%>
+<%end%>
+
+<h2> Our reviews:</h2>
 <%@posts=get_our_reviews("yelp",id)%>
 <%@posts=[] if @posts==nil%>
 
-<table>
+<table class="dets">
   <thead>
     <tr>
       <th>Rating num</th>
@@ -73,3 +73,4 @@ Our reviews:<br>
     </tr>
   </tbody>
 </table>
+</center>
