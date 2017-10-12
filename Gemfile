@@ -7,6 +7,7 @@ end
 
 gem 'foursquare2'
 gem 'geokit'
+gem 'geokit-rails'
 gem 'google_places'
 gem 'devise'
 gem 'yelp', require: 'yelp'
