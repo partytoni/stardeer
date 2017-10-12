@@ -68,11 +68,15 @@
 
   <tbody>
     <% spot_hash=foursquare_spots().first %>
+    <% i=0 %>
     <% spot_hash.second.each do |spot| %>
-    <tr>
-      <td> <%= spot.name%></td>
-      <td><%= link_to 'Details', "/foursquaredetails?id="+spot.id %></td>
-    </tr>
+      <% if i<20 %>
+        <tr>
+          <td> <%= spot.name%></td>
+          <td><%= link_to 'Details', "/foursquaredetails?id="+spot.id %></td>
+        </tr>
+        <%i=i+1%>
+      <%end%>
     <%end%>
   </tbody>
 </table>
